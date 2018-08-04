@@ -45,7 +45,34 @@ RSpec.describe 'CompletedTasks API', type: :request do
       end
     end
 
+    describe 'POST /completed_tasks' do
+      let(:valid_attributes) { { title: 'Hoover', room: 'Kitchen', created_by: '1' } }
 
+      context 'when the request is valid' do
+        before { post '/completed_tasks', params: valid_attributes }
+
+        it 'creates a completed task' do
+          expect(json['title']).to eq('Hoover')
+          expect(json['room']).to eq('Kitchen')
+          expect(json['created_by']).to eq('1')
+        end
+
+        it 'returns status code 201' do
+          expect(response).to have_http_status(201)
+        end
+      end
+
+      context 'when the request has missing data' do
+        before { post '/completed_tasks', params: { title: 'Hoover', created_by: '1' } }
+
+        it 'returns status code 422' do
+          expect(response).to have_http_status(422)
+        end
+
+        it 'returns a validation failure message' do
+          expect(response.body).to match(/Validation failed: Room can't be blank/)
+        end
+      end
+    end
   end
-
 end
