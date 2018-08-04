@@ -1,5 +1,5 @@
 class CompletedTasksController < ApplicationController
-  before_action :set_completed_task, only: [:show]
+  before_action :set_completed_task, only: [:show, :update]
 
   def index
     @completed_tasks = CompletedTask.all
@@ -13,6 +13,11 @@ class CompletedTasksController < ApplicationController
   def create
     @completed_task = CompletedTask.create!(completed_task_params)
     json_response(@completed_task, :created)
+  end
+
+  def update
+    @completed_task.update(completed_task_params)
+    head :no_content
   end
 
   private

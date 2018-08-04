@@ -75,4 +75,20 @@ RSpec.describe 'CompletedTasks API', type: :request do
       end
     end
   end
+
+  describe 'PUT /completed_tasks/:id' do
+    let(:valid_attributes) { { title: 'Mop' } }
+
+    context 'when the record exists' do
+      before { put "/completed_tasks/#{completed_task_id}", params: valid_attributes }
+
+      it 'returns empty json body' do
+        expect(response.body).to be_empty
+      end
+
+      it 'returns status code 204' do
+        expect(response).to have_http_status(204)
+      end
+    end
+  end
 end
