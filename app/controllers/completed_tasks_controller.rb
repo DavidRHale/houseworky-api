@@ -1,5 +1,5 @@
 class CompletedTasksController < ApplicationController
-  before_action :set_completed_task, only: [:show, :update]
+  before_action :set_completed_task, only: [:show, :update, :destroy]
 
   def index
     @completed_tasks = CompletedTask.all
@@ -17,6 +17,11 @@ class CompletedTasksController < ApplicationController
 
   def update
     @completed_task.update(completed_task_params)
+    head :no_content
+  end
+
+  def destroy
+    @completed_task.destroy
     head :no_content
   end
 

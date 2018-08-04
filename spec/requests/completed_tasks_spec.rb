@@ -91,4 +91,26 @@ RSpec.describe 'CompletedTasks API', type: :request do
       end
     end
   end
+
+  describe 'DELETE /completed_tasks/:id' do
+    before { delete "/completed_tasks/#{completed_task_id}" }
+
+    context 'when the record exists' do
+      it 'returns status code 204' do
+        expect(response).to have_http_status(204)
+      end
+    end
+
+    context 'when the record does not exist' do
+      let(:completed_task_id) { 100 }
+
+      it 'returns status code 404' do
+        expect(response).to have_http_status(404)
+      end
+
+      it 'returns a not found message' do
+        expect(response.body).to match(/Couldn't find CompletedTask with 'id'=100/)
+      end
+    end
+  end
 end
