@@ -2,7 +2,7 @@ class CompletedTasksController < ApplicationController
   before_action :set_completed_task, only: [:show, :update, :destroy]
 
   def index
-    @completed_tasks = CompletedTask.all
+    @completed_tasks = current_user.completed_tasks
     json_response(@completed_tasks)
   end
 
@@ -11,7 +11,7 @@ class CompletedTasksController < ApplicationController
   end
 
   def create
-    @completed_task = CompletedTask.create!(completed_task_params)
+    @completed_task = current_user.completed_tasks.create!(completed_task_params)
     json_response(@completed_task, :created)
   end
 
@@ -32,7 +32,7 @@ class CompletedTasksController < ApplicationController
   end
 
   def completed_task_params
-    params.permit(:title, :room, :created_by)
+    params.permit(:title, :room)
   end
 
 end
