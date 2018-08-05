@@ -1,5 +1,4 @@
 require 'rails_helper'
 
-RSpec.describe CompletedTasksController, type: :controller do
-
+RSpec.describe V1::CompletedTasksController, type: :controller do
 end
